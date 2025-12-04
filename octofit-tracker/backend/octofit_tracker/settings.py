@@ -1,3 +1,11 @@
+# Use custom User model
+AUTH_USER_MODEL = 'octofit_tracker.User'
+# Django REST Framework public access for testing
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ]
+}
 """
 Django settings for octofit_tracker project.
 
@@ -25,7 +33,11 @@ SECRET_KEY = 'django-insecure-5!gbuzph&01s%65uh*9h8dmtiro4i2kbuve+20*np(7*y2zvv-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+import os
+CODESPACE_NAME = os.environ.get('CODESPACE_NAME', None)
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+if CODESPACE_NAME:
+    ALLOWED_HOSTS.append(f'{CODESPACE_NAME}-8000.app.github.dev')
 
 
 # Application definition
